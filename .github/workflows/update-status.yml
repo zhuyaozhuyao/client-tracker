@@ -10,27 +10,31 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Update status JSON
+        env:
+          FILE_ID: ${{ github.event.client_payload.file_id }}
+          ITEM_ID: ${{ github.event.client_payload.item_id }}
         run: |
-          FILE="${{ github.event.client_payload.file }}.json"
-          ID="${{ github.event.client_payload.id }}"
+          FILE="${FILE_ID}.json"
           if [ -f "$FILE" ]; then
             python3 -c "
-import json
-with open('$FILE') as f: d=json.load(f)
-d['$ID']=True
-with open('$FILE','w') as f: json.dump(d,f,indent=2)
-print('Updated', '$ID', 'in', '$FILE')
+import json, os
+file = os.environ['FILE_ID'] + '.json'
+item = os.environ['ITEM_ID']
+with open(file) as f: d = json.load(f)
+d[item] = True
+with open(file, 'w') as f: json.dump(d, f, indent=2)
+print('Updated', item, 'in', file)
 "
           else
-            echo "File $FILE not found"
+            echo "Warning: $FILE not found"
           fi
-      
+
       - name: Commit and push
         run: |
           git config user.name "tracker-bot"
           git config user.email "tracker-bot@xiaohongshu.com"
           git add -A
-          git diff --staged --quiet || git commit -m "client checked: ${{ github.event.client_payload.id }}"
+          git diff --staged --quiet || git commit -m "client checked: ${{ github.event.client_payload.item_id }}"
           git push
