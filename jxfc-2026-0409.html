@@ -283,7 +283,7 @@ function applyDone(id) {
   const cb = item.querySelector('.complete-btn');
   if (btn) { btn.classList.add('done'); btn.textContent = '✓'; }
   if (title) title.classList.add('done-text');
-  if (cb) cb.outerHTML = '<div class="done-badge">已完成 ✓ <button class="undo-btn" onclick="undoDone(event, '' + id + '')">撤销</button></div>';
+  if (cb) cb.outerHTML = `<div class="done-badge">已完成 ✓ <button class="undo-btn" onclick="undoDone(event, '${id}')">撤销</button></div>`;
 }
 
 function applyUndo(id) {
@@ -294,7 +294,7 @@ function applyUndo(id) {
   const badge = item.querySelector('.done-badge');
   if (btn) { btn.classList.remove('done'); btn.textContent = ''; }
   if (title) title.classList.remove('done-text');
-  if (badge) badge.outerHTML = '<button class="complete-btn" onclick="askDone(event, '' + id + '')">标记为已完成 ✓</button>';
+  if (badge) badge.outerHTML = `<button class="complete-btn" onclick="askDone(event, '${id}')">标记为已完成 ✓</button>`;
 }
 
 window.addEventListener('load', loadState);
