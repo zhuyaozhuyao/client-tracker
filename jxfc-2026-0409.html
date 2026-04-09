@@ -32,10 +32,21 @@ body { font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif; ba
 .detail-text { font-size:14px; line-height:1.7; color:#333; }
 .detail-section.goal .detail-text { color:#ff2442; font-weight:500; }
 .complete-btn { margin-top:16px; width:100%; padding:12px; background:#ff2442; color:white; border:none; border-radius:10px; font-size:15px; font-weight:600; cursor:pointer; }
-.done-badge { margin-top:16px; text-align:center; color:#34c759; font-weight:600; font-size:15px; padding:10px; background:#f0fff4; border-radius:10px; }
+.done-badge { margin-top:16px; display:flex; align-items:center; justify-content:center; gap:10px; color:#34c759; font-weight:600; font-size:15px; padding:10px; background:#f0fff4; border-radius:10px; }
+.undo-btn { font-size:12px; color:#aaa; background:none; border:1px solid #ddd; border-radius:6px; padding:2px 8px; cursor:pointer; font-weight:400; }
 .footer { text-align:center; color:#bbb; font-size:12px; padding:24px 16px; }
 .toast { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) scale(.9); background:rgba(0,0,0,.75); color:white; padding:12px 24px; border-radius:12px; font-size:15px; opacity:0; transition:all .3s; pointer-events:none; z-index:999; }
 .toast.show { opacity:1; transform:translate(-50%,-50%) scale(1); }
+.modal-mask { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:1000; align-items:center; justify-content:center; }
+.modal-mask.show { display:flex; }
+.modal { background:white; border-radius:16px; padding:24px 20px; width:280px; text-align:center; }
+.modal h3 { font-size:16px; margin-bottom:10px; }
+.modal p { font-size:14px; color:#666; margin-bottom:20px; line-height:1.5; }
+.modal-btns { display:flex; gap:10px; }
+.modal-btns button { flex:1; padding:11px; border:none; border-radius:10px; font-size:15px; font-weight:600; cursor:pointer; }
+.btn-cancel { background:#f5f5f5; color:#666; }
+.btn-confirm { background:#ff2442; color:white; }
+.btn-undo-confirm { background:#ff9500; color:white; }
 </style>
 </head>
 <body>
@@ -53,7 +64,7 @@ body { font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif; ba
         <div class="todo-item" id="item-t1">
             <div class="todo-header" onclick="toggleDetail('t1')">
                 <div class="todo-left">
-                    <button class="check-btn" onclick="markDone(event, 't1')" ></button>
+                    <button class="check-btn" onclick="askDone(event, 't1')"></button>
                     <span class="todo-title">1. 账号一（觉晓法考教育）日预算提升至 8,000-10,000 元</span>
                 </div>
                 <div class="todo-right">
@@ -74,13 +85,13 @@ body { font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif; ba
                     <div class="detail-label">🎯 优化目标</div>
                     <div class="detail-text">释放搜索场域跑量空间，流水持续增长</div>
                 </div>
-                <button class="complete-btn" onclick="markDone(event, 't1')">标记为已完成 ✓</button>
+                <button class="complete-btn" onclick="askDone(event, 't1')">标记为已完成 ✓</button>
             </div>
         </div>
         <div class="todo-item" id="item-t2">
             <div class="todo-header" onclick="toggleDetail('t2')">
                 <div class="todo-left">
-                    <button class="check-btn" onclick="markDone(event, 't2')" ></button>
+                    <button class="check-btn" onclick="askDone(event, 't2')"></button>
                     <span class="todo-title">2. 账号二（觉晓法考教育-千千）立即充值</span>
                 </div>
                 <div class="todo-right">
@@ -101,13 +112,13 @@ body { font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif; ba
                     <div class="detail-label">🎯 优化目标</div>
                     <div class="detail-text">账户余额充足，系统学习不中断</div>
                 </div>
-                <button class="complete-btn" onclick="markDone(event, 't2')">标记为已完成 ✓</button>
+                <button class="complete-btn" onclick="askDone(event, 't2')">标记为已完成 ✓</button>
             </div>
         </div>
         <div class="todo-item" id="item-t3">
             <div class="todo-header" onclick="toggleDetail('t3')">
                 <div class="todo-left">
-                    <button class="check-btn" onclick="markDone(event, 't3')" ></button>
+                    <button class="check-btn" onclick="askDone(event, 't3')"></button>
                     <span class="todo-title">3. 冷启动期不干预两个账号的计划</span>
                 </div>
                 <div class="todo-right">
@@ -128,13 +139,13 @@ body { font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif; ba
                     <div class="detail-label">🎯 优化目标</div>
                     <div class="detail-text">系统完成学习，成本趋于稳定</div>
                 </div>
-                <button class="complete-btn" onclick="markDone(event, 't3')">标记为已完成 ✓</button>
+                <button class="complete-btn" onclick="askDone(event, 't3')">标记为已完成 ✓</button>
             </div>
         </div>
         <div class="todo-item" id="item-t4">
             <div class="todo-header" onclick="toggleDetail('t4')">
                 <div class="todo-left">
-                    <button class="check-btn" onclick="markDone(event, 't4')" ></button>
+                    <button class="check-btn" onclick="askDone(event, 't4')"></button>
                     <span class="todo-title">4. 本周新增 5-8 篇笔记（重点「在职党」主题）</span>
                 </div>
                 <div class="todo-right">
@@ -155,13 +166,13 @@ body { font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif; ba
                     <div class="detail-label">🎯 优化目标</div>
                     <div class="detail-text">补充笔记库，为跑量提升提供素材支撑</div>
                 </div>
-                <button class="complete-btn" onclick="markDone(event, 't4')">标记为已完成 ✓</button>
+                <button class="complete-btn" onclick="askDone(event, 't4')">标记为已完成 ✓</button>
             </div>
         </div>
         <div class="todo-item" id="item-t5">
             <div class="todo-header" onclick="toggleDetail('t5')">
                 <div class="todo-left">
-                    <button class="check-btn" onclick="markDone(event, 't5')" ></button>
+                    <button class="check-btn" onclick="askDone(event, 't5')"></button>
                     <span class="todo-title">5. 「觉晓法考老师阵容一览」出 2-3 条变体</span>
                 </div>
                 <div class="todo-right">
@@ -182,13 +193,13 @@ body { font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif; ba
                     <div class="detail-label">🎯 优化目标</div>
                     <div class="detail-text">复制高效率素材，持续拉低整体留资成本</div>
                 </div>
-                <button class="complete-btn" onclick="markDone(event, 't5')">标记为已完成 ✓</button>
+                <button class="complete-btn" onclick="askDone(event, 't5')">标记为已完成 ✓</button>
             </div>
         </div>
         <div class="todo-item" id="item-t6">
             <div class="todo-header" onclick="toggleDetail('t6')">
                 <div class="todo-left">
-                    <button class="check-btn" onclick="markDone(event, 't6')" ></button>
+                    <button class="check-btn" onclick="askDone(event, 't6')"></button>
                     <span class="todo-title">6. 减少笔记重复绑定</span>
                 </div>
                 <div class="todo-right">
@@ -209,12 +220,37 @@ body { font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif; ba
                     <div class="detail-label">🎯 优化目标</div>
                     <div class="detail-text">降低内部竞争，提升预算利用效率</div>
                 </div>
-                <button class="complete-btn" onclick="markDone(event, 't6')">标记为已完成 ✓</button>
+                <button class="complete-btn" onclick="askDone(event, 't6')">标记为已完成 ✓</button>
             </div>
         </div>
   <div class="footer">每次完成后请点击「标记为已完成」<br>进度实时同步给运营同学 ✌️</div>
 </div>
 <div class="toast" id="toast"></div>
+
+<!-- 完成确认弹窗 -->
+<div class="modal-mask" id="modalDone">
+  <div class="modal">
+    <h3>确认完成？</h3>
+    <p>标记后可以撤销，但请确认该事项已真实执行完成</p>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal('modalDone')">再想想</button>
+      <button class="btn-confirm" id="modalDoneConfirm">确认完成 ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- 撤销确认弹窗 -->
+<div class="modal-mask" id="modalUndo">
+  <div class="modal">
+    <h3>撤销完成状态？</h3>
+    <p>该事项将重新标记为未完成</p>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal('modalUndo')">取消</button>
+      <button class="btn-undo-confirm" id="modalUndoConfirm">确认撤销</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const _t1 = "ghp_GwhoVCeQGbaYQ1R6";
 const _t2 = "guGydRYbQiM8Xg15W4UZ";
@@ -264,22 +300,61 @@ async function saveToGitHub() {
   });
 }
 
-async function markDone(event, id) {
+let _pendingId = null;
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+  _pendingId = null;
+}
+
+function askDone(event, id) {
   event.stopPropagation();
   if (state[id]) return;
+  _pendingId = id;
+  document.getElementById('modalDone').classList.add('show');
+  document.getElementById('modalDoneConfirm').onclick = () => { closeModal('modalDone'); markDone(_pendingId); };
+}
+
+function undoDone(event, id) {
+  event.stopPropagation();
+  _pendingId = id;
+  document.getElementById('modalUndo').classList.add('show');
+  document.getElementById('modalUndoConfirm').onclick = () => { closeModal('modalUndo'); doUndo(_pendingId); };
+}
+
+async function markDone(id) {
   state[id] = true;
   updateProgress();
   const item = document.getElementById('item-' + id);
   const btn = item.querySelector('.check-btn');
   const title = item.querySelector('.todo-title');
   const cb = item.querySelector('.complete-btn');
-  if (btn) { btn.classList.add('done'); btn.textContent = '✓'; btn.disabled = true; }
+  if (btn) { btn.classList.add('done'); btn.textContent = '✓'; }
   if (title) title.classList.add('done-text');
-  if (cb) cb.outerHTML = '<div class="done-badge">已完成 ✓</div>';
+  if (cb) cb.outerHTML = '<div class="done-badge">已完成 ✓ <button class="undo-btn" onclick="undoDone(event, '' + id + '')">撤销</button></div>';
   showToast('✅ 已标记，同步中...');
   try {
     await saveToGitHub();
     showToast('✅ 进度已同步！');
+  } catch(e) {
+    showToast('⚠️ 同步失败，请重试');
+  }
+}
+
+async function doUndo(id) {
+  state[id] = false;
+  updateProgress();
+  const item = document.getElementById('item-' + id);
+  const btn = item.querySelector('.check-btn');
+  const title = item.querySelector('.todo-title');
+  const badge = item.querySelector('.done-badge');
+  if (btn) { btn.classList.remove('done'); btn.textContent = ''; }
+  if (title) title.classList.remove('done-text');
+  if (badge) badge.outerHTML = '<button class="complete-btn" onclick="askDone(event, '' + id + '')">标记为已完成 ✓</button>';
+  showToast('↩️ 已撤销，同步中...');
+  try {
+    await saveToGitHub();
+    showToast('↩️ 撤销成功！');
   } catch(e) {
     showToast('⚠️ 同步失败，请重试');
   }
