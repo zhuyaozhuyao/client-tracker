@@ -260,6 +260,45 @@ const FILENAME = "jxfc-2026-0409.json";
 const TOTAL = 6;
 let state = {"t1": false, "t2": false, "t3": false, "t4": false, "t5": false, "t6": false};
 
+async function loadState() {
+  try {
+    const url = 'https://cdn.jsdelivr.net/gh/zhuyaozhuyao/client-tracker@main/jxfc-2026-0409.json?t=' + Date.now();
+    const r = await fetch(url);
+    if (r.ok) {
+      const remote = await r.json();
+      state = remote;
+      Object.keys(state).forEach(id => {
+        if (state[id]) applyDone(id);
+      });
+      updateProgress();
+    }
+  } catch(e) {}
+}
+
+function applyDone(id) {
+  const item = document.getElementById('item-' + id);
+  if (!item) return;
+  const btn = item.querySelector('.check-btn');
+  const title = item.querySelector('.todo-title');
+  const cb = item.querySelector('.complete-btn');
+  if (btn) { btn.classList.add('done'); btn.textContent = '✓'; }
+  if (title) title.classList.add('done-text');
+  if (cb) cb.outerHTML = '<div class="done-badge">已完成 ✓ <button class="undo-btn" onclick="undoDone(event, '' + id + '')">撤销</button></div>';
+}
+
+function applyUndo(id) {
+  const item = document.getElementById('item-' + id);
+  if (!item) return;
+  const btn = item.querySelector('.check-btn');
+  const title = item.querySelector('.todo-title');
+  const badge = item.querySelector('.done-badge');
+  if (btn) { btn.classList.remove('done'); btn.textContent = ''; }
+  if (title) title.classList.remove('done-text');
+  if (badge) badge.outerHTML = '<button class="complete-btn" onclick="askDone(event, '' + id + '')">标记为已完成 ✓</button>';
+}
+
+window.addEventListener('load', loadState);
+
 function toggleDetail(id) {
   const d = document.getElementById('detail-' + id);
   const a = document.getElementById('arrow-' + id);
@@ -324,14 +363,8 @@ function undoDone(event, id) {
 
 async function markDone(id) {
   state[id] = true;
+  applyDone(id);
   updateProgress();
-  const item = document.getElementById('item-' + id);
-  const btn = item.querySelector('.check-btn');
-  const title = item.querySelector('.todo-title');
-  const cb = item.querySelector('.complete-btn');
-  if (btn) { btn.classList.add('done'); btn.textContent = '✓'; }
-  if (title) title.classList.add('done-text');
-  if (cb) cb.outerHTML = '<div class="done-badge">已完成 ✓ <button class="undo-btn" onclick="undoDone(event, '' + id + '')">撤销</button></div>';
   showToast('✅ 已标记，同步中...');
   try {
     await saveToGitHub();
@@ -343,14 +376,8 @@ async function markDone(id) {
 
 async function doUndo(id) {
   state[id] = false;
+  applyUndo(id);
   updateProgress();
-  const item = document.getElementById('item-' + id);
-  const btn = item.querySelector('.check-btn');
-  const title = item.querySelector('.todo-title');
-  const badge = item.querySelector('.done-badge');
-  if (btn) { btn.classList.remove('done'); btn.textContent = ''; }
-  if (title) title.classList.remove('done-text');
-  if (badge) badge.outerHTML = '<button class="complete-btn" onclick="askDone(event, '' + id + '')">标记为已完成 ✓</button>';
   showToast('↩️ 已撤销，同步中...');
   try {
     await saveToGitHub();
