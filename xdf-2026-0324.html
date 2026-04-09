@@ -2,204 +2,181 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>新东方就业直通车 · 执行清单</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;background:#f5f5f7;color:#1a1a1a}
-.header{background:linear-gradient(135deg,#ff2442,#ff6b6b);color:#fff;padding:28px 20px 24px;text-align:center}
-.header h1{font-size:20px;font-weight:700;margin-bottom:6px}
-.header .meta{font-size:13px;opacity:.85;margin-bottom:16px}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;background:#f5f5f7}
+.hd{background:linear-gradient(135deg,#ff2442,#ff6b6b);color:#fff;padding:28px 20px 24px;text-align:center}
+.hd h1{font-size:20px;font-weight:700;margin-bottom:6px}
+.hd .meta{font-size:13px;opacity:.85;margin-bottom:16px}
 .pw{background:rgba(255,255,255,.25);border-radius:20px;height:8px;margin:0 auto;max-width:280px}
-.pb{background:#fff;border-radius:20px;height:8px;transition:width .4s}
+.pb{background:#fff;border-radius:20px;height:8px;transition:width .5s}
 .pt{font-size:13px;margin-top:8px;opacity:.9}
-.container{max-width:600px;margin:0 auto;padding:16px}
-.todo-item{background:#fff;border-radius:14px;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,.07);overflow:hidden}
-.todo-header{display:flex;align-items:center;justify-content:space-between;padding:16px;cursor:pointer;user-select:none}
-.todo-left{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
-.todo-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.check-btn{width:26px;height:26px;border-radius:50%;border:2px solid #ddd;background:#fff;flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff}
-.check-btn.done{background:#34c759;border-color:#34c759}
-.todo-title{font-size:15px;font-weight:500;line-height:1.4}
-.done-text{color:#aaa;text-decoration:line-through}
+.wrap{max-width:600px;margin:0 auto;padding:16px}
+.card{background:#fff;border-radius:14px;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,.07);overflow:hidden}
+.card-header{display:flex;align-items:center;justify-content:space-between;padding:16px;cursor:pointer;user-select:none}
+.left{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
+.right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.circle{width:26px;height:26px;border-radius:50%;border:2px solid #ddd;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;transition:all .2s}
+.circle.done{background:#34c759;border-color:#34c759}
+.title{font-size:15px;font-weight:500;line-height:1.4}
+.title.done{color:#bbb;text-decoration:line-through}
 .tag{font-size:11px;padding:3px 8px;border-radius:10px;white-space:nowrap;background:#fff3f3;color:#ff2442}
-.arrow{font-size:11px;color:#bbb;transition:transform .2s}
-.arrow.open{transform:rotate(90deg)}
-.todo-detail{padding:0 16px 16px;border-top:1px solid #f0f0f0}
-.detail-section{margin-top:14px}
-.detail-label{font-size:12px;font-weight:600;color:#888;margin-bottom:6px}
-.detail-text{font-size:14px;line-height:1.7;color:#333}
-.detail-section.goal .detail-text{color:#ff2442;font-weight:500}
-.complete-btn{margin-top:16px;width:100%;padding:12px;background:#ff2442;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer}
+.arr{font-size:11px;color:#bbb;transition:transform .2s}
+.arr.open{transform:rotate(90deg)}
+.body{padding:0 16px 16px;border-top:1px solid #f0f0f0}
+.row{margin-top:14px}
+.rl{font-size:12px;font-weight:600;color:#888;margin-bottom:6px}
+.rv{font-size:14px;line-height:1.7;color:#333}
+.row.goal .rv{color:#ff2442;font-weight:500}
+.btn{margin-top:16px;width:100%;padding:13px;background:#ff2442;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer}
 .done-badge{margin-top:16px;text-align:center;color:#34c759;font-weight:600;font-size:15px;padding:10px;background:#f0fff4;border-radius:10px}
-.footer{text-align:center;color:#bbb;font-size:12px;padding:24px 16px;line-height:1.8}
-.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);background:rgba(0,0,0,.8);color:#fff;padding:12px 24px;border-radius:12px;font-size:15px;opacity:0;transition:all .3s;pointer-events:none;z-index:999;white-space:nowrap}
+.footer{text-align:center;color:#bbb;font-size:12px;padding:24px 16px;line-height:2}
+.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);background:rgba(0,0,0,.8);color:#fff;padding:12px 26px;border-radius:12px;font-size:15px;opacity:0;transition:all .3s;pointer-events:none;z-index:999}
 .toast.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
 </style>
-</head>
-<body>
-<div class="header">
+</head><body>
+<div class="hd">
   <h1>📋 新东方就业直通车</h1>
   <div class="meta">复盘日期：2026-03-24 &nbsp;|&nbsp; 运营：一笑</div>
   <div class="pw"><div class="pb" id="pb" style="width:0%"></div></div>
   <div class="pt" id="pt">已完成 0 / 5 项</div>
 </div>
-<div class="container">
-
-    <div class="todo-item" id="item-t1">
-        <div class="todo-header" onclick="toggleDetail('t1')">
-            <div class="todo-left">
-                <div class="check-btn" id="chk-t1"></div>
-                <span class="todo-title" id="ttl-t1">1. 提升出价至 180-200 元</span>
-            </div>
-            <div class="todo-right">
-                <span class="tag">🔴 紧急</span>
-                <span class="arrow" id="arrow-t1">▶</span>
-            </div>
-        </div>
-        <div class="todo-detail" id="detail-t1" style="display:none">
-            <div class="detail-section"><div class="detail-label">📊 当前问题</div><div class="detail-text">当前出价 90 元，苏州新东方烹饪学校出价 193 元，留学赛道同类品出价 344 元。你的 ECPM 仅 3,546，竞争对手高达 26,422，系统直接不给量。</div></div>
-            <div class="detail-section"><div class="detail-label">✅ 建议操作</div><div class="detail-text">进入广告后台，将信息流出价从 90 元逐步上调至 180-200 元区间。建议每次提价 20-30 元，观察 2-3 天曝光变化。</div></div>
-            <div class="detail-section goal"><div class="detail-label">🎯 验收目标</div><div class="detail-text">提价后曝光量提升 ≥ 50%，ECPM 突破 10,000</div></div>
-            <div id="btn-t1"><button class="complete-btn" onclick="markDone(event,'t1')">标记为已完成 ✓</button></div>
-        </div>
-    </div>
-    <div class="todo-item" id="item-t2">
-        <div class="todo-header" onclick="toggleDetail('t2')">
-            <div class="todo-left">
-                <div class="check-btn" id="chk-t2"></div>
-                <span class="todo-title" id="ttl-t2">2. 封面做减法：只保留 1 个核心利益点</span>
-            </div>
-            <div class="todo-right">
-                <span class="tag">🔴 紧急</span>
-                <span class="arrow" id="arrow-t2">▶</span>
-            </div>
-        </div>
-        <div class="todo-detail" id="detail-t2" style="display:none">
-            <div class="detail-section"><div class="detail-label">📊 当前问题</div><div class="detail-text">当前封面同时出现品牌 Logo、合作机构 Logo、菜系列表、CTA 文字，信息过载，CTR 仅 3.94%（正常应在 10-15%）。</div></div>
-            <div class="detail-section"><div class="detail-label">✅ 建议操作</div><div class="detail-text">重新设计封面：移除所有 Logo 和多余文字，只保留一个大字核心利益点（如「澳洲厨师年薪 60 万」），主视觉用真实场景图（学员在澳洲厨房/拿 Offer 照片）。</div></div>
-            <div class="detail-section goal"><div class="detail-label">🎯 验收目标</div><div class="detail-text">CTR 从 3.94% 提升至 8% 以上</div></div>
-            <div id="btn-t2"><button class="complete-btn" onclick="markDone(event,'t2')">标记为已完成 ✓</button></div>
-        </div>
-    </div>
-    <div class="todo-item" id="item-t3">
-        <div class="todo-header" onclick="toggleDetail('t3')">
-            <div class="todo-left">
-                <div class="check-btn" id="chk-t3"></div>
-                <span class="todo-title" id="ttl-t3">3. 标题加入人群锚点 + 痛点词</span>
-            </div>
-            <div class="todo-right">
-                <span class="tag">🟡 重要</span>
-                <span class="arrow" id="arrow-t3">▶</span>
-            </div>
-        </div>
-        <div class="todo-detail" id="detail-t3" style="display:none">
-            <div class="detail-section"><div class="detail-label">📊 当前问题</div><div class="detail-text">三条笔记标题几乎相同，互相竞争，无差异化。参考跑量最好的笔记：结果可视化 + 利益点 + 情绪词。</div></div>
-            <div class="detail-section"><div class="detail-label">✅ 建议操作</div><div class="detail-text">参考公式：[人群锚点]+[反常识/痛点]+[结果]。例：「大学生别卷了！零基础学厨师，澳洲就业 Offer 到手」。至少改 2 条标题，错开人群词，不互抢流量。</div></div>
-            <div class="detail-section goal"><div class="detail-label">🎯 验收目标</div><div class="detail-text">3 条笔记标题互不重复，各锚定不同人群</div></div>
-            <div id="btn-t3"><button class="complete-btn" onclick="markDone(event,'t3')">标记为已完成 ✓</button></div>
-        </div>
-    </div>
-    <div class="todo-item" id="item-t4">
-        <div class="todo-header" onclick="toggleDetail('t4')">
-            <div class="todo-left">
-                <div class="check-btn" id="chk-t4"></div>
-                <span class="todo-title" id="ttl-t4">4. 直播间添加小红夹引导贴片</span>
-            </div>
-            <div class="todo-right">
-                <span class="tag">🟡 重要</span>
-                <span class="arrow" id="arrow-t4">▶</span>
-            </div>
-        </div>
-        <div class="todo-detail" id="detail-t4" style="display:none">
-            <div class="detail-section"><div class="detail-label">📊 当前问题</div><div class="detail-text">对标优秀案例「超哥说留学」，专门设计贴片指向小红夹做留资引导，CVR 显著更高。你的直播间目前没有留资引导贴片。</div></div>
-            <div class="detail-section"><div class="detail-label">✅ 建议操作</div><div class="detail-text">联系设计出一张贴片，文案参考「点击领取澳洲就业攻略」，在直播后台上传贴片并设置跳转小红夹，直播时置顶展示。</div></div>
-            <div class="detail-section goal"><div class="detail-label">🎯 验收目标</div><div class="detail-text">直播留资率提升，CVR 改善</div></div>
-            <div id="btn-t4"><button class="complete-btn" onclick="markDone(event,'t4')">标记为已完成 ✓</button></div>
-        </div>
-    </div>
-    <div class="todo-item" id="item-t5">
-        <div class="todo-header" onclick="toggleDetail('t5')">
-            <div class="todo-left">
-                <div class="check-btn" id="chk-t5"></div>
-                <span class="todo-title" id="ttl-t5">5. 直播话术加入具体学员故事</span>
-            </div>
-            <div class="todo-right">
-                <span class="tag">🟢 建议</span>
-                <span class="arrow" id="arrow-t5">▶</span>
-            </div>
-        </div>
-        <div class="todo-detail" id="detail-t5" style="display:none">
-            <div class="detail-section"><div class="detail-label">📊 当前问题</div><div class="detail-text">用户建立信任需要长周期，具体的故事让用户更有实感。话术需要覆盖：抓用户痛点、提产品亮点、讲学员故事。</div></div>
-            <div class="detail-section"><div class="detail-label">✅ 建议操作</div><div class="detail-text">整理 2-3 个真实学员案例，包含：具体学了什么、在澳洲哪个城市就业、目前月薪多少、澳洲生活状态。写成主播话术脚本，每场直播必讲 1 个故事。</div></div>
-            <div class="detail-section goal"><div class="detail-label">🎯 验收目标</div><div class="detail-text">话术标准化，每场直播有学员故事素材可用</div></div>
-            <div id="btn-t5"><button class="complete-btn" onclick="markDone(event,'t5')">标记为已完成 ✓</button></div>
-        </div>
-    </div>
-  <div class="footer">每次完成一项，请点击「标记为已完成」<br>进度会自动同步给运营同学，无需额外操作 ✌️</div>
+<div class="wrap">
+<div class="card" id="card-t1">
+<div class="card-header" onclick="toggle('t1')">
+<div class="left">
+<div class="circle" id="c-t1"></div>
+<span class="title" id="ti-t1">1. 提升出价至 180-200 元</span>
+</div><div class="right">
+<span class="tag">🔴 紧急</span>
+<span class="arr" id="a-t1">▶</span>
+</div></div>
+<div class="body" id="b-t1" style="display:none">
+<div class="row"><div class="rl">📊 当前问题</div><div class="rv">当前出价 90 元，苏州新东方烹饪学校出价 193 元，留学赛道同类品出价 344 元。你的 ECPM 仅 3,546，竞争对手高达 26,422，系统直接不给量。</div></div>
+<div class="row"><div class="rl">✅ 建议操作</div><div class="rv">进入广告后台，将信息流出价从 90 元逐步上调至 180-200 元区间。建议每次提价 20-30 元，观察 2-3 天曝光变化。</div></div>
+<div class="row goal"><div class="rl">🎯 验收目标</div><div class="rv">提价后曝光量提升 ≥50%，ECPM 突破 10,000</div></div>
+<div id="btn-t1"><button class="btn" onclick="markDone(event,'t1')">标记为已完成 ✓</button></div>
+</div></div>
+<div class="card" id="card-t2">
+<div class="card-header" onclick="toggle('t2')">
+<div class="left">
+<div class="circle" id="c-t2"></div>
+<span class="title" id="ti-t2">2. 封面做减法：只保留 1 个核心利益点</span>
+</div><div class="right">
+<span class="tag">🔴 紧急</span>
+<span class="arr" id="a-t2">▶</span>
+</div></div>
+<div class="body" id="b-t2" style="display:none">
+<div class="row"><div class="rl">📊 当前问题</div><div class="rv">当前封面同时出现品牌 Logo、合作机构 Logo、菜系列表、CTA 文字，信息过载，CTR 仅 3.94%（正常应在 10-15%）。</div></div>
+<div class="row"><div class="rl">✅ 建议操作</div><div class="rv">重新设计封面：移除所有 Logo 和多余文字，只保留一个大字核心利益点（如「澳洲厨师年薪 60 万」），主视觉用真实场景图（学员在澳洲厨房/拿 Offer 照片）。</div></div>
+<div class="row goal"><div class="rl">🎯 验收目标</div><div class="rv">CTR 从 3.94% 提升至 8% 以上</div></div>
+<div id="btn-t2"><button class="btn" onclick="markDone(event,'t2')">标记为已完成 ✓</button></div>
+</div></div>
+<div class="card" id="card-t3">
+<div class="card-header" onclick="toggle('t3')">
+<div class="left">
+<div class="circle" id="c-t3"></div>
+<span class="title" id="ti-t3">3. 标题加入人群锚点 + 痛点词</span>
+</div><div class="right">
+<span class="tag">🟡 重要</span>
+<span class="arr" id="a-t3">▶</span>
+</div></div>
+<div class="body" id="b-t3" style="display:none">
+<div class="row"><div class="rl">📊 当前问题</div><div class="rv">三条笔记标题几乎相同，互相竞争，无差异化。参考跑量最好的笔记：结果可视化 + 利益点 + 情绪词。</div></div>
+<div class="row"><div class="rl">✅ 建议操作</div><div class="rv">参考公式：[人群锚点]+[反常识/痛点]+[结果]。例：「大学生别卷了！零基础学厨师，澳洲就业 Offer 到手」。至少改 2 条标题，错开人群词，不互抢流量。</div></div>
+<div class="row goal"><div class="rl">🎯 验收目标</div><div class="rv">3 条笔记标题互不重复，各锚定不同人群</div></div>
+<div id="btn-t3"><button class="btn" onclick="markDone(event,'t3')">标记为已完成 ✓</button></div>
+</div></div>
+<div class="card" id="card-t4">
+<div class="card-header" onclick="toggle('t4')">
+<div class="left">
+<div class="circle" id="c-t4"></div>
+<span class="title" id="ti-t4">4. 直播间添加小红夹引导贴片</span>
+</div><div class="right">
+<span class="tag">🟡 重要</span>
+<span class="arr" id="a-t4">▶</span>
+</div></div>
+<div class="body" id="b-t4" style="display:none">
+<div class="row"><div class="rl">📊 当前问题</div><div class="rv">对标优秀案例「超哥说留学」，专门设计贴片指向小红夹做留资引导，CVR 显著更高。你的直播间目前没有留资引导贴片。</div></div>
+<div class="row"><div class="rl">✅ 建议操作</div><div class="rv">联系设计出一张贴片，文案参考「点击领取澳洲就业攻略」，在直播后台上传贴片并设置跳转小红夹，直播时置顶展示。</div></div>
+<div class="row goal"><div class="rl">🎯 验收目标</div><div class="rv">直播留资率提升，CVR 改善</div></div>
+<div id="btn-t4"><button class="btn" onclick="markDone(event,'t4')">标记为已完成 ✓</button></div>
+</div></div>
+<div class="card" id="card-t5">
+<div class="card-header" onclick="toggle('t5')">
+<div class="left">
+<div class="circle" id="c-t5"></div>
+<span class="title" id="ti-t5">5. 直播话术加入具体学员故事</span>
+</div><div class="right">
+<span class="tag">🟢 建议</span>
+<span class="arr" id="a-t5">▶</span>
+</div></div>
+<div class="body" id="b-t5" style="display:none">
+<div class="row"><div class="rl">📊 当前问题</div><div class="rv">用户建立信任需要长周期，具体的故事让用户更有实感。话术需要覆盖：抓用户痛点、提产品亮点、讲学员故事。</div></div>
+<div class="row"><div class="rl">✅ 建议操作</div><div class="rv">整理 2-3 个真实学员案例，包含：具体学了什么、在澳洲哪个城市就业、目前月薪多少、澳洲生活状态。写成主播话术脚本，每场直播必讲 1 个故事。</div></div>
+<div class="row goal"><div class="rl">🎯 验收目标</div><div class="rv">话术标准化，每场直播有学员故事素材可用</div></div>
+<div id="btn-t5"><button class="btn" onclick="markDone(event,'t5')">标记为已完成 ✓</button></div>
+</div></div>
+  <div class="footer">完成每项优化后，点击「标记为已完成」<br>进度会自动同步给运营同学，无需额外操作 ✌️</div>
 </div>
 <div class="toast" id="toast"></div>
 <script>
-const WORKER="https://client-tracker.x67833343.workers.dev";
-const FILE_ID="xdf-2026-0324";
+
+const W='https://client-tracker.x67833343.workers.dev';
+const FID='xdf-2026-0324';
 const TOTAL=5;
-let state={"t1": false, "t2": false, "t3": false, "t4": false, "t5": false};
-
-// 从 localStorage 恢复已打勾状态
+let S={"t1": false, "t2": false, "t3": false, "t4": false, "t5": false};
 (function(){
-  const saved=localStorage.getItem('state_'+FILE_ID);
-  if(saved){try{state=JSON.parse(saved);}catch(e){}}
-  Object.keys(state).forEach(id=>{if(state[id])applyDone(id,false);});
-  updateProgress();
+  try{const s=localStorage.getItem('s_'+FID);if(s)S=JSON.parse(s);}catch(e){}
+  Object.keys(S).forEach(id=>{if(S[id])applyDone(id,false);});
+  syncProgress();
 })();
-
-function toggleDetail(id){
-  const d=document.getElementById('detail-'+id);
-  const a=document.getElementById('arrow-'+id);
-  const open=d.style.display!=='none';
-  d.style.display=open?'none':'block';
-  a.classList.toggle('open',!open);
+function syncProgress(){
+  const n=Object.values(S).filter(Boolean).length;
+  document.getElementById('pb').style.width=Math.round(n/TOTAL*100)+'%';
+  document.getElementById('pt').textContent='已完成 '+n+' / '+TOTAL+' 项';
 }
-function showToast(msg,duration){
+function showToast(msg,ms){
   const t=document.getElementById('toast');
   t.textContent=msg;t.classList.add('show');
-  clearTimeout(t._timer);
-  t._timer=setTimeout(()=>t.classList.remove('show'),duration||2500);
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),ms||2500);
 }
-function updateProgress(){
-  const done=Object.values(state).filter(Boolean).length;
-  const pct=Math.round(done/TOTAL*100);
-  document.getElementById('pb').style.width=pct+'%';
-  document.getElementById('pt').textContent='已完成 '+done+' / '+TOTAL+' 项';
+function toggle(id){
+  const b=document.getElementById('b-'+id);
+  const a=document.getElementById('a-'+id);
+  const open=b.style.display!=='none';
+  b.style.display=open?'none':'block';
+  a.classList.toggle('open',!open);
 }
 function applyDone(id,animate){
-  const chk=document.getElementById('chk-'+id);
-  const ttl=document.getElementById('ttl-'+id);
+  const c=document.getElementById('c-'+id);
+  const ti=document.getElementById('ti-'+id);
   const btn=document.getElementById('btn-'+id);
-  if(chk){chk.classList.add('done');chk.textContent='✓';}
-  if(ttl)ttl.classList.add('done-text');
-  if(btn&&animate)btn.innerHTML='<div class="done-badge">已完成 ✓</div>';
+  if(c){c.classList.add('done');c.textContent='✓';}
+  if(ti)ti.classList.add('done');
+  if(animate&&btn)btn.innerHTML='<div class="done-badge">已完成 ✓</div>';
 }
-async function markDone(event,id){
-  event.stopPropagation();
-  if(state[id])return;
-  state[id]=true;
-  localStorage.setItem('state_'+FILE_ID,JSON.stringify(state));
-  updateProgress();
+async function markDone(e,id){
+  e.stopPropagation();
+  if(S[id])return;
+  S[id]=true;
+  localStorage.setItem('s_'+FID,JSON.stringify(S));
+  syncProgress();
   applyDone(id,true);
-  showToast('✅ 已标记，正在同步...',5000);
+  showToast('✅ 已标记，同步中...',8000);
   try{
-    const r=await fetch(WORKER,{
+    const r=await fetch(W,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({file_id:FILE_ID,item_id:id})
+      body:JSON.stringify({file_id:FID,item_id:id})
     });
     const res=await r.json();
-    showToast(res.ok?'✅ 进度已同步！':'⚠️ 同步失败，但本地已记录');
-  }catch(e){
+    showToast(res.ok?'✅ 进度已同步！':'⚠️ 同步失败，本地已保存');
+  }catch(ex){
     showToast('⚠️ 网络异常，进度已本地保存');
   }
 }
 </script>
-</body>
-</html>
+</body></html>
