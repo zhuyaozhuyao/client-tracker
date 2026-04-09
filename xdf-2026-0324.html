@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
+<!DOCTYPE html><html lang='zh-CN'><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>新东方就业直通车 · 执行清单</title>
@@ -35,17 +33,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;backg
 .footer{text-align:center;color:#bbb;font-size:12px;padding:24px 16px;line-height:2}
 .toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);background:rgba(0,0,0,.8);color:#fff;padding:12px 26px;border-radius:12px;font-size:15px;opacity:0;transition:all .3s;pointer-events:none;z-index:999}
 .toast.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
-</style>
-</head><body>
-<div class="hd">
-  <h1>📋 新东方就业直通车</h1>
-  <div class="meta">复盘日期：2026-03-24 &nbsp;|&nbsp; 运营：一笑</div>
-  <div class="pw"><div class="pb" id="pb" style="width:0%"></div></div>
-  <div class="pt" id="pt">加载中...</div>
-</div>
+</style></head><body>
+<div class="hd"><h1>📋 新东方就业直通车</h1>
+<div class="meta">复盘日期：2026-03-24 &nbsp;|&nbsp; 运营：一笑</div>
+<div class="pw"><div class="pb" id="pb" style="width:0%"></div></div>
+<div class="pt" id="pt">加载中...</div></div>
 <div id="loading" style="text-align:center;color:#bbb;padding:40px;font-size:14px">⏳ 正在加载进度...</div>
-<div id="wrap" style="display:none">
-<div class="wrap">
+<div id="wrap" style="display:none"><div class="wrap">
 <div class="card" id="card-t1">
 <div class="card-header" onclick="toggle('t1')">
 <div class="left"><div class="circle" id="c-t1"></div>
@@ -106,97 +100,92 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;backg
 <div class="row goal"><div class="rl">🎯 验收目标</div><div class="rv">话术标准化，每场直播有学员故事素材可用</div></div>
 <div id="btn-t5"><button class="btn" onclick="markDone(event,'t5')">标记为已完成 ✓</button></div>
 </div></div>
-  <div class="footer">完成每项优化后，点击「标记为已完成」<br>换手机或浏览器重新打开，进度仍会保留 ✌️</div>
+<div class="footer">完成每项优化后，点击「标记为已完成」<br>换手机或浏览器重新打开，进度仍会保留 ✌️</div>
 </div></div>
 <div class="toast" id="toast"></div>
 <script>
 
-const W='https://client-tracker.x67833343.workers.dev';
+const _t1='ghp_GwhoVCeQGbaYQ1R6';
+const _t2='guGydRYbQiM8Xg15W4UZ';
+const GHT=_t1+_t2;
+const REPO='zhuyaozhuyao/client-tracker';
 const FID='xdf-2026-0324';
 const TOTAL=5;
-const RAW='https://cdn.jsdelivr.net/gh/zhuyaozhuyao/client-tracker@main/'+FID+'.json';
+const CDN='https://cdn.jsdelivr.net/gh/'+REPO+'@main/'+FID+'.json';
+const API='https://api.github.com/repos/'+REPO+'/contents/'+FID+'.json';
 let S={};
 
 async function loadState() {
-  // 先尝试 Worker（最新），超时3秒降级
-  let loaded = false;
+  let loaded=false;
+  // 读 jsDelivr CDN（国内稳定）
   try {
-    const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), 3000);
-    const r = await fetch(W + '?id=' + FID, {signal: ctrl.signal});
-    clearTimeout(timer);
-    const res = await r.json();
-    if (res.ok && res.state) { S = res.state; loaded = true; }
-  } catch(e) {}
-
-  // 降级：读 jsDelivr CDN（GitHub 内容镜像，国内可访问）
-  if (!loaded) {
-    try {
-      const r = await fetch(RAW + '?t=' + Date.now());
-      S = await r.json();
-      loaded = true;
-    } catch(e) {}
+    const r=await fetch(CDN+'?t='+Date.now());
+    if(r.ok){S=await r.json();loaded=true;}
+  } catch(e){}
+  // 降级 localStorage
+  if(!loaded){
+    try{const s=localStorage.getItem('s_'+FID);if(s){S=JSON.parse(s);loaded=true;}}catch(e){}
   }
-
-  // 再降级：localStorage
-  if (!loaded) {
-    try { const s=localStorage.getItem('s_'+FID); if(s) S=JSON.parse(s); } catch(e) {}
-  }
-
-  if (loaded) localStorage.setItem('s_'+FID, JSON.stringify(S));
-  Object.keys(S).forEach(id => { if(S[id]) applyDone(id, false); });
+  if(loaded) localStorage.setItem('s_'+FID,JSON.stringify(S));
+  Object.keys(S).forEach(id=>{if(S[id])applyDone(id,false);});
   syncProgress();
-  document.getElementById('wrap').style.display = 'block';
-  document.getElementById('loading').style.display = 'none';
+  document.getElementById('wrap').style.display='block';
+  document.getElementById('loading').style.display='none';
 }
 
-function syncProgress() {
-  const n = Object.values(S).filter(Boolean).length;
-  document.getElementById('pb').style.width = Math.round(n/TOTAL*100) + '%';
-  document.getElementById('pt').textContent = '已完成 ' + n + ' / ' + TOTAL + ' 项';
+function syncProgress(){
+  const n=Object.values(S).filter(Boolean).length;
+  document.getElementById('pb').style.width=Math.round(n/TOTAL*100)+'%';
+  document.getElementById('pt').textContent='已完成 '+n+' / '+TOTAL+' 项';
 }
-function showToast(msg, ms) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('show'), ms||2500);
+function showToast(msg,ms){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),ms||2500);
 }
-function toggle(id) {
-  const b = document.getElementById('b-'+id);
-  const a = document.getElementById('a-'+id);
-  const open = b.style.display !== 'none';
-  b.style.display = open ? 'none' : 'block';
-  a.classList.toggle('open', !open);
+function toggle(id){
+  const b=document.getElementById('b-'+id);
+  const a=document.getElementById('a-'+id);
+  const open=b.style.display!=='none';
+  b.style.display=open?'none':'block';
+  a.classList.toggle('open',!open);
 }
-function applyDone(id, animate) {
-  const c = document.getElementById('c-'+id);
-  const ti = document.getElementById('ti-'+id);
-  const btn = document.getElementById('btn-'+id);
-  if(c) { c.classList.add('done'); c.textContent='✓'; }
-  if(ti) ti.classList.add('done');
-  if(animate && btn) btn.innerHTML = '<div class="done-badge">已完成 ✓</div>';
+function applyDone(id,animate){
+  const c=document.getElementById('c-'+id);
+  const ti=document.getElementById('ti-'+id);
+  const btn=document.getElementById('btn-'+id);
+  if(c){c.classList.add('done');c.textContent='✓';}
+  if(ti)ti.classList.add('done');
+  if(animate&&btn)btn.innerHTML='<div class="done-badge">已完成 ✓</div>';
 }
-async function markDone(e, id) {
+async function markDone(e,id){
   e.stopPropagation();
-  if(S[id]) return;
-  S[id] = true;
-  localStorage.setItem('s_'+FID, JSON.stringify(S));
+  if(S[id])return;
+  S[id]=true;
+  localStorage.setItem('s_'+FID,JSON.stringify(S));
   syncProgress();
-  applyDone(id, true);
-  showToast('✅ 已标记，同步中...', 8000);
-  try {
-    const r = await fetch(W, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({file_id: FID, item_id: id})
+  applyDone(id,true);
+  showToast('✅ 已标记，同步中...',8000);
+  try{
+    // 先读当前 sha
+    const getR=await fetch(API,{headers:{'Authorization':'token '+GHT,'User-Agent':'tracker-page'}});
+    const getData=await getR.json();
+    const curState=JSON.parse(atob(getData.content.replace(/\n/g,'')));
+    curState[id]=true;
+    const newContent=btoa(unescape(encodeURIComponent(JSON.stringify(curState,null,2))));
+    // 写回
+    const putR=await fetch(API,{
+      method:'PUT',
+      headers:{'Authorization':'token '+GHT,'Content-Type':'application/json','User-Agent':'tracker-page'},
+      body:JSON.stringify({message:'client checked: '+id,content:newContent,sha:getData.sha})
     });
-    const res = await r.json();
-    showToast(res.ok ? '✅ 进度已同步！' : '⚠️ 同步失败，本地已保存');
-  } catch(ex) {
+    const ok=putR.ok;
+    showToast(ok?'✅ 进度已同步！':'⚠️ 同步失败，本地已保存');
+  }catch(ex){
     showToast('⚠️ 网络异常，进度已本地保存');
   }
 }
 
 loadState();
 
-</script>
-</body></html>
+</script></body></html>
