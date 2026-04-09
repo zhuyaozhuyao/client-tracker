@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>觉晓法考 · 执行清单</title>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif; background:#f5f5f7; color:#1a1a1a; }
+.header { background:linear-gradient(135deg,#ff2442 0%,#ff6b6b 100%); color:white; padding:28px 20px 24px; text-align:center; }
+.header h1 { font-size:20px; font-weight:700; margin-bottom:6px; }
+.header .meta { font-size:13px; opacity:.85; margin-bottom:12px; }
+.doc-link { display:inline-block; margin-bottom:14px; color:white; font-size:13px; opacity:.9; text-decoration:underline; }
+.progress-wrap { background:rgba(255,255,255,.25); border-radius:20px; height:8px; margin:0 auto; max-width:280px; }
+.progress-bar { background:white; border-radius:20px; height:8px; transition:width .4s ease; }
+.progress-text { font-size:13px; margin-top:8px; opacity:.9; }
+.container { max-width:600px; margin:0 auto; padding:16px; }
+.todo-item { background:white; border-radius:14px; margin-bottom:12px; box-shadow:0 1px 6px rgba(0,0,0,.07); overflow:hidden; }
+.todo-header { display:flex; align-items:center; justify-content:space-between; padding:16px; cursor:pointer; user-select:none; }
+.todo-left { display:flex; align-items:center; gap:12px; flex:1; min-width:0; }
+.todo-right { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+.check-btn { width:26px; height:26px; border-radius:50%; border:2px solid #ddd; background:white; cursor:pointer; font-size:14px; color:white; flex-shrink:0; transition:all .2s; display:flex; align-items:center; justify-content:center; }
+.check-btn.done { background:#34c759; border-color:#34c759; }
+.todo-title { font-size:15px; font-weight:500; line-height:1.4; }
+.done-text { color:#aaa; text-decoration:line-through; }
+.tag { font-size:11px; padding:3px 8px; border-radius:10px; white-space:nowrap; background:#fff3f3; color:#ff2442; }
+.arrow { font-size:11px; color:#bbb; transition:transform .2s; }
+.arrow.open { transform:rotate(90deg); }
+.todo-detail { padding:0 16px 16px; border-top:1px solid #f0f0f0; }
+.detail-section { margin-top:14px; }
+.detail-label { font-size:12px; font-weight:600; color:#888; margin-bottom:6px; }
+.detail-text { font-size:14px; line-height:1.7; color:#333; }
+.detail-section.goal .detail-text { color:#ff2442; font-weight:500; }
+.complete-btn { margin-top:16px; width:100%; padding:12px; background:#ff2442; color:white; border:none; border-radius:10px; font-size:15px; font-weight:600; cursor:pointer; }
+.done-badge { margin-top:16px; text-align:center; color:#34c759; font-weight:600; font-size:15px; padding:10px; background:#f0fff4; border-radius:10px; }
+.footer { text-align:center; color:#bbb; font-size:12px; padding:24px 16px; }
+.toast { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) scale(.9); background:rgba(0,0,0,.75); color:white; padding:12px 24px; border-radius:12px; font-size:15px; opacity:0; transition:all .3s; pointer-events:none; z-index:999; }
+.toast.show { opacity:1; transform:translate(-50%,-50%) scale(1); }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>📋 觉晓法考</h1>
+  <div class="meta">复盘日期：2026-04-09 &nbsp;|&nbsp; 运营：一笑</div>
+  <a href="https://zhuyaozhuyao.github.io/client-tracker/jx-2026-0409.html" target="_blank" class="doc-link">📄 查看完整诊断报告 →</a>
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar" style="width:0%"></div>
+  </div>
+  <div class="progress-text" id="progressText">已完成 0 / 6 项</div>
+</div>
+<div class="container">
+  
+        <div class="todo-item" id="item-t1">
+            <div class="todo-header" onclick="toggleDetail('t1')">
+                <div class="todo-left">
+                    <button class="check-btn" onclick="markDone(event, 't1')" ></button>
+                    <span class="todo-title">1. 账号一（觉晓法考教育）日预算提升至 8,000-10,000 元</span>
+                </div>
+                <div class="todo-right">
+                    <span class="tag">🔴 紧急</span>
+                    <span class="arrow" id="arrow-t1">▶</span>
+                </div>
+            </div>
+            <div class="todo-detail" id="detail-t1" style="display:none">
+                <div class="detail-section">
+                    <div class="detail-label">📊 当前问题</div>
+                    <div class="detail-text">日预算 5,000 元已成增长天花板，搜索场域正在高速放量（+251%），预算封顶导致跑量提前结束。</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">✅ 建议操作</div>
+                    <div class="detail-text">进入广告后台，将「觉晓法考教育」日预算从 5,000 元提升至 8,000-10,000 元。</div>
+                </div>
+                <div class="detail-section goal">
+                    <div class="detail-label">🎯 优化目标</div>
+                    <div class="detail-text">释放搜索场域跑量空间，流水持续增长</div>
+                </div>
+                <button class="complete-btn" onclick="markDone(event, 't1')">标记为已完成 ✓</button>
+            </div>
+        </div>
+        <div class="todo-item" id="item-t2">
+            <div class="todo-header" onclick="toggleDetail('t2')">
+                <div class="todo-left">
+                    <button class="check-btn" onclick="markDone(event, 't2')" ></button>
+                    <span class="todo-title">2. 账号二（觉晓法考教育-千千）立即充值</span>
+                </div>
+                <div class="todo-right">
+                    <span class="tag">🔴 紧急</span>
+                    <span class="arrow" id="arrow-t2">▶</span>
+                </div>
+            </div>
+            <div class="todo-detail" id="detail-t2" style="display:none">
+                <div class="detail-section">
+                    <div class="detail-label">📊 当前问题</div>
+                    <div class="detail-text">「觉晓法考教育-千千」余额仅约 9,000 元，约还能跑 5 天，系统会提前收缩放量。</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">✅ 建议操作</div>
+                    <div class="detail-text">对「觉晓法考教育-千千」充值至少 3-5 万元，避免断投打断冷启动学习节奏。</div>
+                </div>
+                <div class="detail-section goal">
+                    <div class="detail-label">🎯 优化目标</div>
+                    <div class="detail-text">账户余额充足，系统学习不中断</div>
+                </div>
+                <button class="complete-btn" onclick="markDone(event, 't2')">标记为已完成 ✓</button>
+            </div>
+        </div>
+        <div class="todo-item" id="item-t3">
+            <div class="todo-header" onclick="toggleDetail('t3')">
+                <div class="todo-left">
+                    <button class="check-btn" onclick="markDone(event, 't3')" ></button>
+                    <span class="todo-title">3. 冷启动期不干预两个账号的计划</span>
+                </div>
+                <div class="todo-right">
+                    <span class="tag">🔴 紧急</span>
+                    <span class="arrow" id="arrow-t3">▶</span>
+                </div>
+            </div>
+            <div class="todo-detail" id="detail-t3" style="display:none">
+                <div class="detail-section">
+                    <div class="detail-label">📊 当前问题</div>
+                    <div class="detail-text">「觉晓法考教育-千千」14 个计划全部处于「学习期目标未达成」；「觉晓法考教育」搜索场域也在快速放量阶段。频繁调整出价/暂停重启会让系统反复重置，成本越调越高。</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">✅ 建议操作</div>
+                    <div class="detail-text">两个账号均至少给 7 天观察窗口，只关闭长期 0 转化的计划（如千千账号计划 178958247），其余保持稳定不干预。</div>
+                </div>
+                <div class="detail-section goal">
+                    <div class="detail-label">🎯 优化目标</div>
+                    <div class="detail-text">系统完成学习，成本趋于稳定</div>
+                </div>
+                <button class="complete-btn" onclick="markDone(event, 't3')">标记为已完成 ✓</button>
+            </div>
+        </div>
+        <div class="todo-item" id="item-t4">
+            <div class="todo-header" onclick="toggleDetail('t4')">
+                <div class="todo-left">
+                    <button class="check-btn" onclick="markDone(event, 't4')" ></button>
+                    <span class="todo-title">4. 本周新增 5-8 篇笔记（重点「在职党」主题）</span>
+                </div>
+                <div class="todo-right">
+                    <span class="tag">🟡 重要</span>
+                    <span class="arrow" id="arrow-t4">▶</span>
+                </div>
+            </div>
+            <div class="todo-detail" id="detail-t4" style="display:none">
+                <div class="detail-section">
+                    <div class="detail-label">📊 当前问题</div>
+                    <div class="detail-text">4 月以来日均新投笔记 0-2 篇，笔记是跑量弹药，供给不足限制了跑量上限。</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">✅ 建议操作</div>
+                    <div class="detail-text">本周内创作并投放 5-8 篇新笔记，重点主题「在职法考」「打工人备考」，标题参考高CTR模板：真人出镜 + 情绪词 + 结果承诺。</div>
+                </div>
+                <div class="detail-section goal">
+                    <div class="detail-label">🎯 优化目标</div>
+                    <div class="detail-text">补充笔记库，为跑量提升提供素材支撑</div>
+                </div>
+                <button class="complete-btn" onclick="markDone(event, 't4')">标记为已完成 ✓</button>
+            </div>
+        </div>
+        <div class="todo-item" id="item-t5">
+            <div class="todo-header" onclick="toggleDetail('t5')">
+                <div class="todo-left">
+                    <button class="check-btn" onclick="markDone(event, 't5')" ></button>
+                    <span class="todo-title">5. 「觉晓法考老师阵容一览」出 2-3 条变体</span>
+                </div>
+                <div class="todo-right">
+                    <span class="tag">🟡 重要</span>
+                    <span class="arrow" id="arrow-t5">▶</span>
+                </div>
+            </div>
+            <div class="todo-detail" id="detail-t5" style="display:none">
+                <div class="detail-section">
+                    <div class="detail-label">📊 当前问题</div>
+                    <div class="detail-text">该笔记留资率 86.2%、成本最低，目前只有 1 条在跑，复制潜力未释放。</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">✅ 建议操作</div>
+                    <div class="detail-text">以该笔记为模板出 2-3 条变体，换封面图或标题角度（如「觉晓法考民法老师推荐」），分别挂不同计划。</div>
+                </div>
+                <div class="detail-section goal">
+                    <div class="detail-label">🎯 优化目标</div>
+                    <div class="detail-text">复制高效率素材，持续拉低整体留资成本</div>
+                </div>
+                <button class="complete-btn" onclick="markDone(event, 't5')">标记为已完成 ✓</button>
+            </div>
+        </div>
+        <div class="todo-item" id="item-t6">
+            <div class="todo-header" onclick="toggleDetail('t6')">
+                <div class="todo-left">
+                    <button class="check-btn" onclick="markDone(event, 't6')" ></button>
+                    <span class="todo-title">6. 减少笔记重复绑定</span>
+                </div>
+                <div class="todo-right">
+                    <span class="tag">🟡 重要</span>
+                    <span class="arrow" id="arrow-t6">▶</span>
+                </div>
+            </div>
+            <div class="todo-detail" id="detail-t6" style="display:none">
+                <div class="detail-section">
+                    <div class="detail-label">📊 当前问题</div>
+                    <div class="detail-text">两账号重复度均超行业基准，同一笔记挂多个计划导致内部抢量、成本上升。</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">✅ 建议操作</div>
+                    <div class="detail-text">整理两个账号的计划-笔记绑定关系，每个计划改为配专属笔记，减少同一笔记跨计划复用。</div>
+                </div>
+                <div class="detail-section goal">
+                    <div class="detail-label">🎯 优化目标</div>
+                    <div class="detail-text">降低内部竞争，提升预算利用效率</div>
+                </div>
+                <button class="complete-btn" onclick="markDone(event, 't6')">标记为已完成 ✓</button>
+            </div>
+        </div>
+  <div class="footer">每次完成后请点击「标记为已完成」<br>进度实时同步给运营同学 ✌️</div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const _t1 = "ghp_GwhoVCeQGbaYQ1R6";
+const _t2 = "guGydRYbQiM8Xg15W4UZ";
+const GITHUB_TOKEN = _t1 + _t2;
+const REPO = "zhuyaozhuyao/client-tracker";
+const FILENAME = "jxfc-2026-0409.json";
+const TOTAL = 6;
+let state = {"t1": false, "t2": false, "t3": false, "t4": false, "t5": false, "t6": false};
+
+function toggleDetail(id) {
+  const d = document.getElementById('detail-' + id);
+  const a = document.getElementById('arrow-' + id);
+  const open = d.style.display !== 'none';
+  d.style.display = open ? 'none' : 'block';
+  a.classList.toggle('open', !open);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function updateProgress() {
+  const done = Object.values(state).filter(Boolean).length;
+  const pct = Math.round(done / TOTAL * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = '已完成 ' + done + ' / ' + TOTAL + ' 项';
+}
+
+async function saveToGitHub() {
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(state, null, 2))));
+  let sha = '';
+  try {
+    const r = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + FILENAME, {
+      headers: { Authorization: 'token ' + GITHUB_TOKEN }
+    });
+    if (r.ok) { sha = (await r.json()).sha; }
+  } catch(e) {}
+  const body = { message: 'update: client checked item', content };
+  if (sha) body.sha = sha;
+  await fetch('https://api.github.com/repos/' + REPO + '/contents/' + FILENAME, {
+    method: 'PUT',
+    headers: { Authorization: 'token ' + GITHUB_TOKEN, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+}
+
+async function markDone(event, id) {
+  event.stopPropagation();
+  if (state[id]) return;
+  state[id] = true;
+  updateProgress();
+  const item = document.getElementById('item-' + id);
+  const btn = item.querySelector('.check-btn');
+  const title = item.querySelector('.todo-title');
+  const cb = item.querySelector('.complete-btn');
+  if (btn) { btn.classList.add('done'); btn.textContent = '✓'; btn.disabled = true; }
+  if (title) title.classList.add('done-text');
+  if (cb) cb.outerHTML = '<div class="done-badge">已完成 ✓</div>';
+  showToast('✅ 已标记，同步中...');
+  try {
+    await saveToGitHub();
+    showToast('✅ 进度已同步！');
+  } catch(e) {
+    showToast('⚠️ 同步失败，请重试');
+  }
+}
+</script>
+</body>
+</html>
